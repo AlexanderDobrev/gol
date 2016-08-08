@@ -80,7 +80,7 @@ class ImageDrawer implements GridDrawInterface
 
         for ($x = $size->getX(); $x < $size->getWidth(); $x++) {
             for ($y = $size->getY(); $y < $size->getHeight(); $y++) {
-                if ($gameOfLife->getGrid()->findCell(new Point($x, $y))->getIsAlive()) {
+                if ($gameOfLife->getGrid()->getCellState(new Point($x, $y))) {
                     imagesetpixel($this->imageHandle, $x, $y, GdColor::black($this->imageHandle));
                 }
             }

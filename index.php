@@ -6,7 +6,7 @@ use AlexD\gol\patterns\GridPattern;
 
 include "config.php";
 
-$grid = Grid::createFromPattern(GridPattern::createRandom(50, 50));
+$grid = Grid::createFromPattern(GridPattern::createRandom(50, 50, 11));
 
 
 header('Content-type:image/gif');

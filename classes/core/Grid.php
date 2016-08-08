@@ -21,7 +21,7 @@ class Grid
 
         for ($i = $size->getX(); $i < $size->getWidth(); $i++) {
             for ($j = $size->getY(); $j < $size->getHeight(); $j++) {
-                $this->cells[$i][$j] = new Cell();
+                $this->cells[$i][$j] = false;
             }
         }
     }
@@ -43,7 +43,7 @@ class Grid
         foreach ($pattern as $row) {
 
             foreach ($row as $cell) {
-                $cells[$x][$y] = new Cell($pattern[$x][$y]);
+                $cells[$x][$y] = $pattern[$x][$y];
                 $y++;
             }
 
@@ -113,10 +113,8 @@ class Grid
                 $cellPosition->getY() + $neighborCoordinates[1]
             );
 
-            if ($neighboorCell = $this->findCell($position)) {
-                if ($neighboorCell->getIsAlive()) {
-                    $aliveCounter++;
-                }
+            if ($this->getCellState($position)) {
+                $aliveCounter++;
             }
         }
 
@@ -125,14 +123,23 @@ class Grid
 
     /**
      * @param Point $position
-     * @return bool|Cell
+     * @return bool
      */
-    public function findCell(Point $position)
+    public function getCellState(Point $position)
     {
         if (isset($this->cells[$position->getX()][$position->getY()])) {
             return $this->cells[$position->getX()][$position->getY()];
         }
 
         return false;
+    }
+
+    /**
+     * @param Point $position
+     * @param bool $state
+     */
+    public function setCellState(Point $position, $state = false)
+    {
+        $this->cells[$position->getX()][$position->getY()] = $state;
     }
 }

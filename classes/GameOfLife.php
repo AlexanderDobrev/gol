@@ -38,17 +38,14 @@ class GameOfLife
         for ($i = $size->getX(); $i < $size->getWidth(); $i++) {
             for ($j = $size->getY(); $j < $size->getHeight(); $j++) {
                 $position = new Point($i, $j);
-                if ($cell = $this->getGrid()->findCell($position)) {
+                $cellState = $this->getGrid()->getCellState($position);
 
-                    $livingNeighborsCount = $this->getGrid()->getLivingNeighborsCount($position);
+                $livingNeighborsCount = $this->getGrid()->getLivingNeighborsCount($position);
 
-                    if ($cell->getIsAlive()) {
-                        $cell->setIsAlive($livingNeighborsCount > 1 && $livingNeighborsCount < 4);
-                    } else {
-                        if ($livingNeighborsCount >= 3) {
-                            $cell->setIsAlive(true);
-                        }
-                    }
+                if ($cellState) {
+                    $this->getGrid()->setCellState($position, $livingNeighborsCount > 1 && $livingNeighborsCount < 4);
+                } else if ($livingNeighborsCount >= 3) {
+                    $this->getGrid()->setCellState($position, true);
                 }
             }
         }
